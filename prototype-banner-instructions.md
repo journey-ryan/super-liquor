@@ -15,13 +15,13 @@ The reference build is the HOT Stores and Consultants prototype. A tested starte
 ## 2. The banner at a glance
 
 ```
-PROTOTYPE  Device [Fit|Desktop|Tablet|Mobile]  Width [Fit|375|768|1024|1280|1440|1920]  Grid [Off|On]  |  <project switchers>      1280px · xl 1280
+PROTOTYPE  Device [Fit|Desktop|Tablet|Mobile]  Width [Fit|390|768|1024|1280|1440|1920]  Grid [Off|On]  |  <project switchers>      1280px · xl 1280
 ```
 
 | Order | Group | Options | What it does |
 |---|---|---|---|
-| 1 | Device | Fit, Desktop, Tablet, Mobile | Picks the frame. Fit fills the window. Desktop is a 1440 browser frame. Tablet is 768 x 1024 and Mobile is 375 x 812, both in a dark device bezel. |
-| 2 | Width | Fit, 375, 768, 1024, 1280, 1440, 1920 | Sets the exact frame width. Picking a width also updates Device (under 768 is Mobile, 768 to 1023 is Tablet, 1024 and up is Desktop). |
+| 1 | Device | Fit, Desktop, Tablet, Mobile | Picks the frame. Fit fills the window. Desktop is a 1440 browser frame. Tablet is 768 x 1024 and Mobile is 390 x 812, both in a dark device bezel. |
+| 2 | Width | Fit, 390, 768, 1024, 1280, 1440, 1920 | Sets the exact frame width. Picking a width also updates Device (under 768 is Mobile, 768 to 1023 is Tablet, 1024 and up is Desktop). |
 | 3 | Grid | Off, On | Shows the 12-column layout grid (4 columns on mobile) over the page, with the live site margins and gutters. |
 | 4 | Readout | (right side) | Live text like `1280px · xl 1280 · shown at 74%`, so you always know the real width and breakpoint, even when the frame is scaled down to fit. |
 | 5+ | Project switchers | Page, variants, states | After a thin divider. One segmented control per decision you want to show the client. |
@@ -43,16 +43,16 @@ Keyboard shortcuts (ignored while typing in a field): **G** toggles the grid. **
 
 The overlay sits on top of the page (`pointer-events: none`), inside `#app`, so it always matches the frame width.
 
-Default values (HOT, aligned to the live site; change per project):
+Super Liquor values (mobile 390 / 20px and desktop 1440 / 85px from DESIGN.md; md, lg, gutter and columns kept from the HOT build):
 
 | Breakpoint | Frame width | Columns | Margin | Gutter |
 |---|---|---|---|---|
 | mobile | 0 to 767 | 4 | 20 | 24 |
 | md | 768 to 1023 | 12 | 24 | 24 |
 | lg | 1024 to 1279 | 12 | 44 | 24 |
-| xl | 1280 to 1535 | 12 | 72 | 24 |
-| 2xl | 1536 to 1899 | 12 | 72 | 24 |
-| 3xl | 1900 and up | 12 | 72 | 24, content max 1920 |
+| xl | 1280 to 1535 | 12 | 85 | 24 |
+| 2xl | 1536 to 1899 | 12 | 85 | 24 |
+| 3xl | 1900 and up | 12 | 85 | 24, content max 1270 (frame max 1440) |
 
 Rules:
 - The product's own wrapper (`.wrap`) must use the **same** margins, gutter and max width as the overlay, so cards and blocks can be checked against it by eye.
@@ -106,7 +106,7 @@ Conventions:
 
 ## 8. QA before publishing
 
-1. Click every Width: 375, 768, 1024, 1280, 1440, 1920. Check nothing overflows sideways and the readout shows the right breakpoint.
+1. Click every Width: 390, 768, 1024, 1280, 1440, 1920. Check nothing overflows sideways and the readout shows the right breakpoint.
 2. Turn the Grid on at each width and check cards, headings and blocks start and end on column edges.
 3. Device Mobile and Tablet: check the bezel frame, scrolling inside the frame, and that sheets and modals stay inside it.
 4. Click every project switcher and confirm the change is visible without hunting for it.
@@ -133,7 +133,7 @@ Copy this as the first version of any prototype, then build the product inside `
 <title>Prototype starter</title>
 <style>
 /* ---------- 1. Prototype banner (tooling, never product styles) ---------- */
-:root{--pb-h:34px;--pb-ink:#1d1d1f;--pb-mute:#8e8e93;--pb-bg:rgba(246,246,248,.92);--pb-seg:#e4e4e9;--pb-accent:#46166b;--pb-accent-bg:#efe6f8}
+:root{--pb-h:34px;--pb-ink:#1d1d1f;--pb-mute:#8e8e93;--pb-bg:rgba(246,246,248,.92);--pb-seg:#e4e4e9;--pb-accent:#205AA7;--pb-accent-bg:#E9EFF8}
 html,body{margin:0;height:100%}
 body{overflow:hidden;background:#fff}
 #protobar{position:fixed;inset:0 0 auto 0;height:var(--pb-h);z-index:1000;display:flex;align-items:center;gap:16px;padding:0 12px;
@@ -167,15 +167,15 @@ html.pb-mobile #scroller,html.pb-tablet #scroller{scrollbar-width:none}
 /* ---------- 3. Layout grid overlay (matches the live site grid) ---------- */
 #pbGrid{display:none;position:absolute;inset:0;z-index:999;pointer-events:none}
 html.pb-grid #pbGrid{display:block}
-#pbGrid .gw{height:100%;max-width:1920px;margin:0 auto;padding:0 var(--m);display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--g)}
+#pbGrid .gw{height:100%;max-width:1440px;margin:0 auto;padding:0 var(--m);display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--g)}
 #pbGrid i{background:rgba(255,72,110,.09);border-inline:1px solid rgba(255,72,110,.30)}
-#app{--m:72px;--g:24px;--cols:12}
+#app{--m:85px;--g:24px;--cols:12}
 @container app (max-width:1279px){#pbGrid{--m:44px}}
 @container app (max-width:1023px){#pbGrid{--m:24px}}
 @container app (max-width:767px){#pbGrid{--m:20px;--cols:4}#pbGrid i:nth-child(n+5){display:none}}
 
 /* ---------- 4. Product styles start here. Use @container app, never @media, for layout ---------- */
-.wrap{max-width:1920px;margin:0 auto;padding:0 72px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+.wrap{max-width:1440px;margin:0 auto;padding:0 85px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
 @container app (max-width:1279px){.wrap{padding:0 44px}}
 @container app (max-width:1023px){.wrap{padding:0 24px}}
 @container app (max-width:767px){.wrap{padding:0 20px;grid-template-columns:repeat(4,minmax(0,1fr))}}
@@ -186,7 +186,7 @@ html.pb-grid #pbGrid{display:block}
 <div id="protobar" role="toolbar" aria-label="Prototype controls">
   <span class="pb-title">Prototype</span>
   <div class="pb-group"><span>Device</span><div class="pb-seg" data-group="device"><span class="pb-thumb"></span><button data-v="fit" aria-pressed="true">Fit</button><button data-v="desktop" aria-pressed="false">Desktop</button><button data-v="tablet" aria-pressed="false">Tablet</button><button data-v="mobile" aria-pressed="false">Mobile</button></div></div>
-  <div class="pb-group"><span>Width</span><div class="pb-seg" data-group="width"><span class="pb-thumb"></span><button data-v="fit" aria-pressed="true">Fit</button><button data-v="375" aria-pressed="false">375</button><button data-v="768" aria-pressed="false">768</button><button data-v="1024" aria-pressed="false">1024</button><button data-v="1280" aria-pressed="false">1280</button><button data-v="1440" aria-pressed="false">1440</button><button data-v="1920" aria-pressed="false">1920</button></div></div>
+  <div class="pb-group"><span>Width</span><div class="pb-seg" data-group="width"><span class="pb-thumb"></span><button data-v="fit" aria-pressed="true">Fit</button><button data-v="390" aria-pressed="false">390</button><button data-v="768" aria-pressed="false">768</button><button data-v="1024" aria-pressed="false">1024</button><button data-v="1280" aria-pressed="false">1280</button><button data-v="1440" aria-pressed="false">1440</button><button data-v="1920" aria-pressed="false">1920</button></div></div>
   <div class="pb-group"><span>Grid</span><div class="pb-seg" data-group="grid"><span class="pb-thumb"></span><button data-v="off" aria-pressed="true">Off</button><button data-v="on" aria-pressed="false">On</button></div></div>
   <span class="pb-div" aria-hidden="true"></span>
   <!-- Project switchers go here, after the divider: pages, variants, states -->
@@ -207,7 +207,7 @@ html.pb-grid #pbGrid{display:block}
   const H=document.documentElement,app=$('#app');
   /* Breakpoints and grid: change these to the project's own values */
   const BP=[[0,'mobile'],[768,'md 768'],[1024,'lg 1024'],[1280,'xl 1280'],[1536,'2xl 1536'],[1900,'3xl 1900']];
-  const DEVICE={desktop:{w:1440},tablet:{w:768,h:1024},mobile:{w:375,h:812}};
+  const DEVICE={desktop:{w:1440},tablet:{w:768,h:1024},mobile:{w:390,h:812}};
   const S={device:'fit',width:'fit',grid:'off'};
   const store={get(k){try{return localStorage.getItem('pb:'+k)}catch(e){return null}},set(k,v){try{localStorage.setItem('pb:'+k,v)}catch(e){}}};
 
